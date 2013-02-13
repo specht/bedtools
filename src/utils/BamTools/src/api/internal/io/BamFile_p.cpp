@@ -13,6 +13,7 @@ using namespace BamTools::Internal;
 
 #include <cstdio>
 #include <iostream>
+#include <stdlib.h>
 using namespace std;
 
 BamFile::BamFile(const string& filename)
@@ -57,6 +58,10 @@ bool BamFile::Open(const IBamIODevice::OpenMode mode) {
         SetErrorString("BamFile::Open", message);
         return false;
     }
+
+    // allocate buffer
+    m_buffer = static_cast<char*>(malloc(16 * 1024 * 1024));
+    setvbuf(m_stream, m_buffer, _IOFBF, 16 * 1024 * 1024);
 
     // store current IO mode & return success
     m_mode = mode;

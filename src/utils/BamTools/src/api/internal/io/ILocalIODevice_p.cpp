@@ -12,6 +12,7 @@ using namespace BamTools;
 using namespace BamTools::Internal;
 
 #include <cstdio>
+#include "stdlib.h"
 using namespace std;
 
 ILocalIODevice::ILocalIODevice(void)
@@ -36,6 +37,12 @@ void ILocalIODevice::Close(void) {
 
     // reset other device state
     m_mode = IBamIODevice::NotOpen;
+    
+    if (m_buffer)
+    {
+        free(m_buffer);
+        m_buffer = 0;
+    }
 }
 
 int64_t ILocalIODevice::Read(char* data, const unsigned int numBytes) {

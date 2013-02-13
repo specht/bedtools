@@ -42,6 +42,7 @@ class ILocalIODevice : public IBamIODevice {
     // data members
     protected:
         FILE* m_stream;
+        char* m_buffer;
 };
 
 } // namespace Internal
